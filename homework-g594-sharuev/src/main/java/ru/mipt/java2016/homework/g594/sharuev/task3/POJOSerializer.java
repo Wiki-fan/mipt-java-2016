@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-/*
+/**
  * Сериализатор для простых данных.
  * Простыми считаются Integer/int, Long/long, Boolean/boolean, Double/double,
  * String, Date и классы, содержащие поля только из этих типов. Поля предков тоже сериализуются.
@@ -27,12 +27,10 @@ public class POJOSerializer<Value> implements SerializationStrategy<Value> {
 
     public void serializeToStream(Value value,
                                   DataOutputStream dataOutputStream) throws SerializationException {
-
         try {
             serializeAtom(value, dataOutputStream);
         } catch (UnknownObjectException e) {
             // Это не тип, который сериализует serializeAtom. Может, это класс с такими полями?
-            //Field[] fields = value.getClass().getDeclaredFields();
             ArrayList<Field> fields = new ArrayList<>();
             Class classToSerialize = clazz;
             do {
@@ -57,7 +55,6 @@ public class POJOSerializer<Value> implements SerializationStrategy<Value> {
         try {
             return (Value) deserializeAtom(clazz, dataInputStream);
         } catch (UnknownObjectException e) {
-            //Field[] fields = clazz.getDeclaredFields();
             ArrayList<Field> fields = new ArrayList<>();
             Class toSerialize = clazz;
             do {
