@@ -11,29 +11,26 @@ public class OptimizedKvsPerformanceTest extends KeyValueStoragePerformanceTest 
     @Override
     protected KeyValueStorage<String, String> buildStringsStorage(
             String path) throws MalformedDataException {
-        return new BinaryTreeOptimizedKvs<String, String>(path,
-                new StringSerializer(), new StringSerializer(),
-                new StringComparator());
-        /*new OptimizedKvs<String, String>(path,
-                new POJOSerializer<String>(String.class), new POJOSerializer<String>(String.class),
-                new POJOComparator<>(String.class))*/
+        return new FsOptimizedKvs<String, String>(path,
+                new PojoSerializer<String>(String.class),
+                new PojoSerializer<String>(String.class), 0);
+        /*return new FsOptimizedKvs<String, String>(path,
+                new StringSerializer(), new StringSerializer(), 0);*/
     }
 
     @Override
     protected KeyValueStorage<Integer, Double> buildNumbersStorage(
             String path) throws MalformedDataException {
-        return new BinaryTreeOptimizedKvs<Integer, Double>(path,
-                new POJOSerializer<Integer>(Integer.class),
-                new POJOSerializer<Double>(Double.class),
-                new POJOComparator<>(Integer.class));
+        return new FsOptimizedKvs<Integer, Double>(path,
+                new PojoSerializer<Integer>(Integer.class),
+                new PojoSerializer<Double>(Double.class), 0);
     }
 
     @Override
     protected KeyValueStorage<StudentKey, Student> buildPojoStorage(
             String path) throws MalformedDataException {
-        return new BinaryTreeOptimizedKvs<StudentKey, Student>(path,
-                new POJOSerializer<StudentKey>(StudentKey.class),
-                new POJOSerializer<Student>(Student.class),
-                new POJOComparator<>(StudentKey.class));
+        return new FsOptimizedKvs<StudentKey, Student>(path,
+                new PojoSerializer<StudentKey>(StudentKey.class),
+                new PojoSerializer<Student>(Student.class), 0);
     }
 }
